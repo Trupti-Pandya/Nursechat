@@ -1,0 +1,30 @@
+# Root-level .gitignore
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Editor directories
+.cursor/
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Node
+node_modules/
+
+# OS specific
+.DS_Store
+Thumbs.db 

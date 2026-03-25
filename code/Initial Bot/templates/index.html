@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Screening Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Medical Screening Assistant</h1>
+            <p>AI-powered initial patient assessment tool</p>
+        </header>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <button id="clear-btn">New Conversation</button>
+                <button id="summary-btn">Generate Summary</button>
+            </div>
+            
+            <div id="chat-messages">
+                {% for message in conversation %}
+                    <div class="message {{ 'user-message' if message.role == 'user' else 'assistant-message' }}">
+                        <div class="message-content">
+                            <p>{{ message.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="chat-input">
+                <form id="chat-form">
+                    <input type="text" id="user-input" placeholder="Describe your symptoms..." autocomplete="off">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="summary-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Medical Screening Summary</h2>
+                <div id="summary-content"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 

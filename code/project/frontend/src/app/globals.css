@@ -1,0 +1,584 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --health-green: var(--health-green);
+  --health-blue: var(--health-blue);
+  --health-green-light: var(--health-green-light);
+  --health-yellow-light: var(--health-yellow-light);
+  /* Frosted glass effect variables */
+  --glass-blur: 8px;
+  --glass-opacity: 0.8;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Animation variables */
+  --animate-first: moveVertical 20s ease infinite;
+  --animate-second: moveInCircle 15s reverse infinite;
+  --animate-third: moveInCircle 25s linear infinite;
+  --animate-fourth: moveHorizontal 25s ease infinite;
+  --animate-fifth: moveInCircle 18s ease infinite;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.705 0.015 286.067);
+  /* Health theme colors */
+  --health-green: #22c55e;
+  --health-blue: #3b82f6;
+  --health-green-light: #86efac;
+  --health-yellow-light: #fef08a;
+  /* Frosted glass effect variables */
+  --glass-blur: 8px;
+  --glass-opacity: 0.8;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: rgba(var(--ring), 0.5);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* Custom styles for health theme */
+.health-theme {
+  background: linear-gradient(135deg, rgba(134, 239, 172, 0.3), rgba(254, 240, 138, 0.3));
+}
+
+/* Simplify health-card styles since base styles are in the common section */
+.health-card {
+  border-radius: var(--radius);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.health-icon {
+  color: var(--health-green);
+}
+
+/* Frosted chat bubble styles */
+.frosted-bubble-green {
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  max-width: 100%;
+  color: #0f172a;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05), 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.frosted-bubble-blue {
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  max-width: 100%;
+  color: #0f172a;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05), 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Dark mode variants for frosted chat bubbles */
+.frosted-bubble-green-dark {
+  background-color: rgba(15, 23, 42, 0.5);
+  background-image: linear-gradient(to bottom right, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  max-width: 100%;
+  color: #e2e8f0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.frosted-bubble-blue-dark {
+  background-color: rgba(15, 23, 42, 0.5);
+  background-image: linear-gradient(to bottom right, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.3));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  max-width: 100%;
+  color: #e2e8f0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Remove the hover effects */
+.frosted-bubble-green::after,
+.frosted-bubble-blue::after,
+.frosted-bubble-green-dark::after,
+.frosted-bubble-blue-dark::after,
+.frosted-bubble-green:hover::after,
+.frosted-bubble-blue:hover::after,
+.frosted-bubble-green-dark:hover::after,
+.frosted-bubble-blue-dark:hover::after {
+  display: none;
+}
+
+/* Frosted input bar - keeping just specific overrides since base styles are in the common section */
+.frosted-input {
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .frosted-input {
+  background-color: rgba(15, 23, 42, 0.75);
+  background-image: linear-gradient(to bottom right, rgba(59, 130, 246, 0.15), rgba(15, 23, 42, 0.9));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #e2e8f0;
+}
+
+/* Remove old chat bubble styles with the diamond shapes */
+.chat-bubble-ai, .chat-bubble-user, .chat-bubble-ai::before, .chat-bubble-user::before {
+  display: none;
+}
+
+/* Animation keyframes for background animation */
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-30%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(30%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-30%) translateY(-10%);
+  }
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg) translate(20px) rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg) translate(20px) rotate(-180deg);
+  }
+  100% {
+    transform: rotate(360deg) translate(20px) rotate(-360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-30%);
+  }
+  50% {
+    transform: translateY(30%);
+  }
+  100% {
+    transform: translateY(-30%);
+  }
+}
+
+/* Consistent background for all components without dark variants */
+[data-slot="card"],
+.frosted-input,
+.health-card {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* QuickAction buttons styling with dark variants */
+.quick-action-button {
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  color: #0f172a;
+}
+
+.dark .quick-action-button {
+  background-color: rgba(15, 23, 42, 0.75);
+  background-image: linear-gradient(to bottom right, rgba(59, 130, 246, 0.15), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #e2e8f0;
+}
+
+.quick-action-button:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.dark .quick-action-button:hover {
+  background-color: rgba(15, 23, 42, 0.85);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove remaining animations for quick action buttons */
+.quick-action-button::after,
+.dark .quick-action-button::after,
+.quick-action-button:hover::after {
+  display: none;
+}
+
+/* Animation utilities */
+.animate-in {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+
+.spin-in-90 {
+  animation-name: spinIn90;
+}
+
+@keyframes spinIn90 {
+  from {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+/* Chat container border glow effect */
+.chat-container-glow {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.dark .chat-container-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a pulsing animation for the glow effect */
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.65;
+    transform: scale(1.01);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.015);
+  }
+  100% {
+    opacity: 0.65;
+    transform: scale(1.01);
+  }
+}
+
+.glow-pulse {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Typing animation for chat loading */
+.typing-animation {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  padding: 0 10px;
+}
+
+.typing-animation span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background-color: rgba(34, 197, 94, 0.7);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.dark .typing-animation span {
+  background-color: rgba(34, 197, 94, 0.7);
+}
+
+.typing-animation span:nth-child(1) {
+  animation: typing 1s infinite 0s;
+}
+
+.typing-animation span:nth-child(2) {
+  animation: typing 1s infinite 0.2s;
+}
+
+.typing-animation span:nth-child(3) {
+  animation: typing 1s infinite 0.4s;
+}
+
+@keyframes typing {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(209, 213, 219, 0.5);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.6);
+}
+
+/* Hide scrollbar for non-hover */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(209, 213, 219, 0.5) transparent;
+}
+
+.dark {
+  --background: oklch(0.145 0.002 269.064);
+  --foreground: oklch(0.967 0.004 286.221);
+  --card: oklch(0.145 0.002 269.064);
+  --card-foreground: oklch(0.967 0.004 286.221);
+  --popover: oklch(0.157 0.002 264.013);
+  --popover-foreground: oklch(0.967 0.004 286.221);
+  --primary: oklch(0.549 0.196 287.023);
+  --primary-foreground: oklch(0.167 0.005 288.287);
+  --secondary: oklch(0.205 0.008 285.967);
+  --secondary-foreground: oklch(0.967 0.004 286.221);
+  --muted: oklch(0.205 0.008 285.967);
+  --muted-foreground: oklch(0.639 0.001 286.298);
+  --accent: oklch(0.205 0.008 285.967);
+  --accent-foreground: oklch(0.967 0.004 286.221);
+  --destructive: oklch(0.697 0.224 27.283);
+  --destructive-foreground: oklch(0.967 0.004 286.221);
+  --border: oklch(0.205 0.008 285.967);
+  --input: oklch(0.205 0.008 285.967);
+  --ring: oklch(0.404 0.104 286.86);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@keyframes pulse-slow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animations for microphone button */
+@keyframes pulse-slow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-fast {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse-fast 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Animation for subtle pulsing of message bubbles */
+@keyframes pulse-subtle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Existing animations below */
+@keyframes pulse-slow {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* Style the close button in fullscreen mode */
+.sm\:max-w-\[95vw\] [data-radix-dialog-close] {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  background-color: white;
+  border-radius: 9999px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark .sm\:max-w-\[95vw\] [data-radix-dialog-close] {
+  background-color: #1e293b;
+  color: white;
+}

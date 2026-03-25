@@ -1,0 +1,106 @@
+SQL - Supabase Functions:
+
+========================================================================
+-- Ensure the HNSW index exists for vector similarity
+CREATE INDEX IF NOT EXISTS embeddings_hnsw_idx ON embeddings USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);
+
+-- Ensure GIN indexes exist for metadata filtering
+CREATE INDEX IF NOT EXISTS embeddings_metadata_title_idx ON embeddings USING GIN ((metadata->>'title') gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS embeddings_metadata_section_titles_idx ON embeddings USING GIN ((metadata->>'section_titles') gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS embeddings_metadata_keywords_idx ON embeddings USING GIN ((metadata->>'keywords') gin_trgm_ops);
+
+========================================================================
+
+CREATE OR REPLACE FUNCTION public.find_similar_embeddings(
+    query_embedding vector(1536),
+    min_similarity float,
+    title_filter text,
+    section_titles_filter text,
+    keywords_filter text,
+    result_limit int
+)
+RETURNS TABLE (
+    id uuid,
+    metadata jsonb,
+    similarity float
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        e.id,
+        e.metadata,
+        (1 - (e.embedding <=> query_embedding)) AS similarity
+    FROM embeddings e
+    WHERE (1 - (e.embedding <=> query_embedding)) >= min_similarity
+      AND (title_filter = '' OR e.metadata->>'title' ILIKE '%' || title_filter || '%')
+      AND (section_titles_filter = '' OR e.metadata->>'section_titles' ILIKE '%' || section_titles_filter || '%')
+      AND (keywords_filter = '' OR e.metadata->>'keywords' ILIKE '%' || keywords_filter || '%')
+    ORDER BY (1 - (e.embedding <=> query_embedding)) DESC
+    LIMIT result_limit;
+END;
+$$ LANGUAGE plpgsql;
+
+=============================================================================================================
+
+
+CREATE OR REPLACE FUNCTION public.find_similar_embeddings(
+    query_embedding vector(1536),
+    min_similarity float,
+    keywords_filter text,
+    result_limit int
+)
+RETURNS TABLE (
+    id uuid,
+    metadata jsonb,
+    similarity float
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        e.id,
+        e.metadata,
+        (1 - (e.embedding <=> query_embedding)) AS similarity
+    FROM embeddings e
+    WHERE (1 - (e.embedding <=> query_embedding)) >= min_similarity
+      AND (keywords_filter = '' OR e.metadata->>'keywords' ILIKE '%' || keywords_filter || '%')
+    ORDER BY (1 - (e.embedding <=> query_embedding)) DESC
+    LIMIT result_limit;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Grant permissions
+GRANT EXECUTE ON FUNCTION public.find_similar_embeddings TO anon;
+GRANT EXECUTE ON FUNCTION public.find_similar_embeddings TO authenticated;
+
+===========================================================================
+
+CREATE OR REPLACE FUNCTION public.find_similar_embeddings_medical(
+    query_embedding vector(1536),
+    min_similarity float,
+    result_limit int
+)
+RETURNS TABLE (
+    id uuid,
+    metadata jsonb,
+    similarity float
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        e.id,
+        e.metadata,
+        (1 - (e.embedding <=> query_embedding)) AS similarity
+    FROM embeddings e
+    WHERE (1 - (e.embedding <=> query_embedding)) >= min_similarity
+    ORDER BY (1 - (e.embedding <=> query_embedding)) DESC
+    LIMIT result_limit;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Grant permissions
+GRANT EXECUTE ON FUNCTION public.find_similar_embeddings_medical TO anon;
+GRANT EXECUTE ON FUNCTION public.find_similar_embeddings_medical TO authenticated;
+
+======================================================================================
+
